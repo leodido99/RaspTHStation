@@ -20,14 +20,16 @@
  * 29-27 : Pin 9
  */
 
+/**
+ * Sets the function for the given GPIO pin
+ */
 void GPIO_SetFunction(uint32_t pin, _gpio_func func) {
 	uint8_t offset = pin / 10;
 	uint32_t reg = pGPIORegs->GPFSEL[offset];
 	/* 10 GPIO pins per 32 bit registers */
-
-	reg = (func << (pin % 10));
-
-
-
+	uint8_t shift = 3 * (pin % 10));
+	reg = reg & ~(0x7 << shift);
+	reg = reg | ((func & 0x7) << shift);
+	pGPIORegs->GPFSEL[offset] = reg;
 }
 
