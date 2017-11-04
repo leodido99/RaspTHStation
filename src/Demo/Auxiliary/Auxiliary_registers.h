@@ -8,12 +8,16 @@
 #ifndef AUXILIARY_AUXILIARY_REGISTERS_H_
 #define AUXILIARY_AUXILIARY_REGISTERS_H_
 
-#define __AUXILIARY_REG_BASE 0x7E215000
+#include <stdint.h>
 
-/**
- * AUXIRQ Register
- */
-#define __AUXILIARY_IRQ (__AUXILIARY_REG_BASE + 0x0)
+#define __AUXILIARY_BASE_ADDR 0x20215000
+
+typedef struct {
+	uint32_t AUX_IRQ;
+	uint32_t AUX_ENABLES;
+} BCM2835_AUXILIARY_REGS;
+
+volatile BCM2835_AUXILIARY_REGS * const pAuxiliaryRegs = (BCM2835_AUXILIARY_REGS *) (__AUXILIARY_BASE_ADDR);
 
 /**
  * AUXIRQ SPI2 Pending IRQ
@@ -29,11 +33,6 @@
 #define __AUXILIARY_IRQ_MU 0
 
 /**
- * AUXENB Register
- */
-#define __AUXILIARY_ENABLES (__AUXILIARY_REG_BASE + 0x4)
-
-/**
  * AUXIRQ SPI2 Enable
  */
 #define __AUXILIARY_IRQ_SPI2 2
@@ -45,7 +44,5 @@
  * AUXIRQ MiniUART Enable
  */
 #define __AUXILIARY_IRQ_MU 0
-
-
 
 #endif /* AUXILIARY_AUXILIARY_REGISTERS_H_ */
